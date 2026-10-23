@@ -1,31 +1,20 @@
 from django.shortcuts import render
-from django.db.models import Q
-from .models import Local
+from .models import Movie
+import json 
+import requests
 
 # Create your views here.
 def home(request):
-    return render(request, "index.html")
-
-# Inicio
-def home(request):
-    busca = request.GET.get('busca', '')
-
-    locais = Local.objects.none()
-
-    if busca:
-        locais = Local.objects.filter(
-            Q(nome__icontains=busca) |
-            Q(predio__icontains=busca) |
-            Q(sala__icontains=busca)
-        )
-
-    return render(request, "inicio.html", {
-        "locais": locais,
-        "busca": busca
-    })
+    response = requests.get("https://omdbapi.com/?apikey=38b4b85b&s=Batman&type=movie")
+    results_json= response.json()
+    movies= results.json['Search']
+    context= {
+        'movies': movies
+    }
+    return render(request, "index.html",context)
 
 
-# Deslogar
-def deslogar(request):
-    return render(request, "deslogar.html")
-```
+
+def home2(request):
+    movies= Movie.objects.all()
+    return render(request, "home.html", {"movies": movies})

@@ -20,6 +20,5 @@ from mapucapp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home),
-    path('deslogar/', views.deslogar, name='deslogar'),
+    path('',home2),
 ]
