@@ -24,4 +24,7 @@ urlpatterns = [
     path('movies/new/', views.movie_create, name='movie_create'),
     path('movies/<int:pk>/update/', views.movie_update, name='movie_update'),
     path('movies/<int:pk>/delete/', views.movie_delete, name='movie_delete'),
+    path('cadastro/', views.cadastro, name='cadastro'),
+    path('login/', views.login_usuario, name='login'),
+    path('logout/', views.logout_usuario, name='logout'),
 ]
