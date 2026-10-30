@@ -48,52 +48,45 @@ def movie_delete(request, pk):
     return render(request, 'movie_confirm_delete.html', {'movie': movie})
 
 def cadastro(request):
+    error = ''
+
     if request.method == 'POST':
-        nome = request.POST.get('nome')
+        username = request.POST.get('username')
         email = request.POST.get('email')
-        matricula = request.POST.get('matricula')
-        senha = request.POST.get('senha')
-        confirmar_senha = request.POST.get('confirmar_senha')
+        password = request.POST.get('password')
 
-        if senha != confirmar_senha:
-            messages.error(request, 'As senhas não coincidem.')
-            return redirect('cadastro')
+        if User.objects.filter(username=username).exists():
+            error = 'Nome de usuário já cadastrado.'
+        else:
+            User.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
+            return redirect('login')
 
-        if User.objects.filter(username=matricula).exists():
-            messages.error(request, 'Essa matrícula já está cadastrada.')
-            return redirect('cadastro')
-
-        User.objects.create_user(
-            username=matricula,
-            email=email,
-            password=senha,
-            first_name=nome
-        )
-
-        return redirect('login')
-
-    return render(request, 'cadastro.html')
+    return render(request, 'cadastro.html', {
+        'action': 'Cadastrar',
+        'error': error
+    })
 
 
 def login_usuario(request):
-    if request.method == 'POST':
-        matricula = request.POST.get('matricula')
-        senha = request.POST.get('senha')
+    error = ''
 
-        usuario = authenticate(
-            request,
-            username=matricula,
-            password=senha
-        )
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        usuario = authenticate(request, username=username, password=password)
 
         if usuario is not None:
             auth_login(request, usuario)
             return redirect('movie_list')
         else:
-            messages.error(request, 'Matrícula ou senha incorretas.')
+            error = 'Usuário ou senha incorretos.'
 
-    return render(request, 'login.html')
-
+    return render(request, 'login.html', {'error': error})
 
 def logout_usuario(request):
     auth_logout(request)
