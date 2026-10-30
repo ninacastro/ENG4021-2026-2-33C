@@ -1,5 +1,5 @@
 """
-ASGI config for mapucc project.
+ASGI config for mapuc project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
