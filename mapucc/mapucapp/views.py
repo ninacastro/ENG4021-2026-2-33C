@@ -87,6 +87,7 @@ def login_usuario(request):
 
     return render(request, 'login.html', {'error': error})
 
+
 def logout_usuario(request):
     auth_logout(request)
     return redirect('login')
