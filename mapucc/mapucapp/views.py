@@ -2,9 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Movie
 from .forms import MovieForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+
 
 def home(request):
     movies = Movie.objects.all()
