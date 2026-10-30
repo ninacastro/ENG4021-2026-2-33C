@@ -1,16 +1,6 @@
-"""
-ASGI config for mapuc project.
+from django.apps import AppConfig
 
-It exposes the ASGI callable as a module-level variable named ``application``.
 
-For more information on this file, see
-https://docs.djangoproject.com/en/6.1/howto/deployment/asgi/
-"""
-
-import os
-
-from django.core.asgi import get_asgi_application
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mapucc.settings')
-
-application = get_asgi_application()
+class MapuccappConfig(AppConfig):
+  default_auto_field = 'django.db.models.BigAutoField'
+  name= 'mapuccapp'
